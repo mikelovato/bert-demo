@@ -17,8 +17,10 @@ def predict():
     inputs = tokenizer(data["text"], return_tensors="pt", truncation=True, padding=True)
     outputs = model(**inputs)
     predictions = torch.argmax(outputs.logits, dim=1).tolist()
+    attention_weights = outputs.attentions
+    loss = outputs.loss
 
-    return jsonify({"predictions": predictions})
+    return jsonify({"predictions": predictions, "weights":attention_weights, "loss": loss})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=6372)
