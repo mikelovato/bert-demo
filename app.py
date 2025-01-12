@@ -55,8 +55,8 @@ print(model)
 # make_dot(output.logits, params=dict(model.named_parameters())).render("model_structure", format="png")
 
 # Load fine-tuned model
-model = BertForSequenceClassification.from_pretrained('./fine_tuned_bert')
-tokenizer = BertTokenizer.from_pretrained('./fine_tuned_bert')
+model = BertForSequenceClassification.from_pretrained('./fine_tuned_model')
+tokenizer = BertTokenizer.from_pretrained('./fine_tuned_model')
 
 app = Flask(__name__)
 
