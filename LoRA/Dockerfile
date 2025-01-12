@@ -15,7 +15,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Set Hugging Face token as an environment variable (replace YOUR_HF_TOKEN with the actual token)
-ENV HF_TOKEN="----"
+ENV HF_TOKEN="---replace with your token---"
+# https://huggingface.co/settings/tokens
 
 # Log in to Hugging Face CLI using the token
 RUN huggingface-cli login --token ${HF_TOKEN}
