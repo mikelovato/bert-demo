@@ -6,8 +6,10 @@ from datasets import load_dataset
 
 # Load a dataset
 dataset = load_dataset("imdb")  # IMDB sentiment classification dataset
-train_data = dataset["train"]
-test_data = dataset["test"]
+train_data = dataset["train"].select(range(512))
+test_data = dataset["test"].select(range(512))
+
+# check the size of the dataset
 
 # map them
 tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
@@ -30,8 +32,8 @@ training_args = TrainingArguments(
     learning_rate=2e-5,
     per_device_train_batch_size=16,
     per_device_eval_batch_size=16,
-    num_train_epochs=3,
-    weight_decay=0.01,
+    num_train_epochs=1,
+    weight_decay=0.08,
     logging_dir="./logs",
 )
 
@@ -51,6 +53,10 @@ print(model)
 # dummy_input = {"input_ids": torch.randint(0, 1000, (1, 128)), "attention_mask": torch.ones(1, 128)}
 # output = model(**dummy_input)
 # make_dot(output.logits, params=dict(model.named_parameters())).render("model_structure", format="png")
+
+# Load fine-tuned model
+model = BertForSequenceClassification.from_pretrained('./fine_tuned_bert')
+tokenizer = BertTokenizer.from_pretrained('./fine_tuned_bert')
 
 app = Flask(__name__)
 
